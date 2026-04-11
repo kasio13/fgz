@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Game Zone — Inscripción Torneo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --neon-cyan: #00f5ff;
+      --neon-pink: #ff0080;
+      --neon-yellow: #ffff00;
+      --neon-green: #39ff14;
+      --neon-purple: #bf00ff;
+      --dark-bg: #05050f;
+      --dark-mid: #0a0a1a;
+      --dark-card: #0d0d22;
+      --grid-color: rgba(0,245,255,0.07);
+      --text-main: #e0e0ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-main);
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.15) 3px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(5,5,15,0.92);
+      border-bottom: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0,245,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+    }
+
+    .nav-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    .nav-logo span { color: var(--neon-pink); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 8rem 2rem 5rem;
+      min-height: 100vh;
+    }
+
+    .section-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 6px;
+      color: var(--neon-pink);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .section-line {
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      margin-bottom: 3rem;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .contact-box {
+      max-width: 700px;
+      margin: 0 auto;
+      border: 1px solid rgba(0,245,255,0.3);
+      padding: 3rem;
+      background: var(--dark-card);
+      box-shadow: 0 0 40px rgba(0,245,255,0.1);
+    }
+
+    #torneo-info {
+      text-align: left;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      border-left: 3px solid var(--neon-yellow);
+      background: rgba(255,255,0,0.05);
+    }
+
+    #torneo-nombre {
+      font-family: 'Orbitron';
+      color: var(--neon-yellow);
+      margin-bottom: 0.5rem;
+    }
+
+    #torneo-detalles {
+      font-size: 0.85rem;
+      color: rgba(224,224,255,0.6);
+    }
+
+    #torneo-premio {
+      font-family: 'Press Start 2P';
+      font-size: 0.6rem;
+      color: var(--neon-green);
+      margin-top: 0.5rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      background: rgba(0,245,255,0.05);
+      border: 1px solid rgba(0,245,255,0.3);
+      color: var(--text-main);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      padding: 0.8rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0,245,255,0.2);
+    }
+
+    .contact-form select option { background: var(--dark-bg); }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+
+    .btn-submit {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      padding: 1rem;
+      background: transparent;
+      border: 2px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 30px var(--neon-cyan);
+    }
+
+    #inscripcion-exito {
+      text-align: center;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--dark-bg);
+      border-top: 1px solid rgba(0,245,255,0.2);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo span { color: var(--neon-pink); }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: rgba(224,224,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--neon-cyan); }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(224,224,255,0.3);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 90px;
+      left: 2rem;
+      z-index: 90;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--neon-pink);
+      color: var(--neon-pink);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: var(--neon-pink);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-pink);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .back-btn { top: 75px; left: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location='torneos.html'">◀ VOLVER</button>
+
+  <nav>
+    <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="torneos.html">Torneos</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <div style="max-width: 700px; margin: 0 auto;">
+      <h1 style="font-family: 'Press Start 2P'; color: var(--neon-cyan); font-size: clamp(1.2rem, 4vw, 2rem); margin-bottom: 1rem;">📝 INSCRIPCIÓN TORNEO</h1>
+      <p class="section-label">// Registrate ahora</p>
+      <div class="section-line"></div>
+      
+      <div class="contact-box">
+        <div id="torneo-info">
+          <h3 id="torneo-nombre"></h3>
+          <p id="torneo-detalles"></p>
+          <p id="torneo-premio"></p>
+        </div>
+
+        <form name="inscripcion-torneo" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form" id="form-inscripcion">
+          <input type="hidden" name="form-name" value="inscripcion-torneo" />
+          <p class="hidden" style="display:none"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+          
+          <input type="text" id="reg-nombre" name="nombre" placeholder="Tu nombre completo" required />
+          <input type="text" id="reg-gamertag" name="gamertag" placeholder="Gamertag / Nombre en juego" required />
+          <input type="email" id="reg-correo" name="correo" placeholder="Correo electrónico" required />
+          <input type="tel" id="reg-telefono" name="telefono" placeholder="Número de teléfono" required />
+          <select id="reg-experiencia" name="experiencia" required>
+            <option value="">— Nivel de experiencia —</option>
+            <option>Principiante</option>
+            <option>Intermedio</option>
+            <option>Avanzado</option>
+            <option>Profesional</option>
+          </select>
+          <textarea id="reg-notas" name="notas" placeholder="Notas adicionales (opcional)"></textarea>
+          <button type="submit" class="btn-submit">▶ CONFIRMAR INSCRIPCIÓN</button>
+        </form>
+
+        <div id="inscripcion-exito" style="display: none;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+          <h2 style="font-family: 'Press Start 2P'; font-size: 1rem; color: var(--neon-green); margin-bottom: 1rem;">¡INSCRIPCIÓN EXITOSA!</h2>
+          <p style="font-size: 0.9rem; color: rgba(224,224,255,0.7); line-height: 1.7;">
+            Te has registrado correctamente. Recibirás un correo de confirmación con todos los detalles del torneo en los próximos minutos.<br><br>
+            ¡Mucha suerte jugador! 🕹️
+          </p>
+          <button class="btn-submit" style="margin-top: 2rem;" onclick="window.location='index.html'">▶ VOLVER AL INICIO</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">F.G.<span>Z</span></div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="torneos.html">Torneos</a>
+    </div>
+    <p class="footer-copy">© 2026 Final Game Zone — Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    const torneos = {
+      sf6: { nombre: "Street Fighter 6 Championship", detalles: "📅 15 de Abril · 🕐 4:00 PM · 👥 Max 32 jugadores", premio: "🏆 PRIZE POOL: $500 USD" },
+      pokemon: { nombre: "Pokémon TCG — Liga Mensual", detalles: "📅 20 de Abril · 🕐 2:00 PM · 👥 Max 64 jugadores", premio: "🏆 PRIZE POOL: Packs + Trofeos" },
+      tekken8: { nombre: "Tekken 8 — Open Series", detalles: "📅 1 de Mayo · 🕐 5:00 PM · 👥 Max 32 jugadores", premio: "🏆 PRIZE POOL: $300 USD" },
+      mtg: { nombre: "Magic: The Gathering Draft", detalles: "📅 10 de Mayo · 🕐 12:00 PM · 👥 Max 24 jugadores", premio: "🏆 PRIZE POOL: Store Credit + Cartas" },
+      yugioh: { nombre: "Yu-Gi-Oh! — Battle City", detalles: "📅 22 de Abril · 🕐 1:00 PM · 👥 Max 32 jugadores", premio: "🏆 PRIZE POOL: Blue-Eyes Ultimate Dragon Promo" }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const torneoId = params.get('torneo');
+    
+    if(torneoId && torneos[torneoId]) {
+      const t = torneos[torneoId];
+      document.getElementById('torneo-nombre').textContent = t.nombre;
+      document.getElementById('torneo-detalles').textContent = t.detalles;
+      document.getElementById('torneo-premio').textContent = t.premio;
+    } else {
+      document.getElementById('torneo-nombre').textContent = "Torneo General";
+    }
+
+    // Para Netlify Forms
+    if(window.location.search.includes('success')) {
+      document.getElementById('form-inscripcion').style.display = 'none';
+      document.getElementById('inscripcion-exito').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

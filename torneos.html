@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Game Zone — Torneos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --neon-cyan: #00f5ff;
+      --neon-pink: #ff0080;
+      --neon-yellow: #ffff00;
+      --neon-green: #39ff14;
+      --neon-purple: #bf00ff;
+      --dark-bg: #05050f;
+      --dark-mid: #0a0a1a;
+      --dark-card: #0d0d22;
+      --grid-color: rgba(0,245,255,0.07);
+      --text-main: #e0e0ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-main);
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.15) 3px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(5,5,15,0.92);
+      border-bottom: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0,245,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+    }
+
+    .nav-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+      letter-spacing: 2px;
+    }
+
+    .nav-logo span { color: var(--neon-pink); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 8rem 2rem 5rem;
+    }
+
+    .section-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 6px;
+      color: var(--neon-pink);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .section-title .accent { color: var(--neon-cyan); }
+
+    .section-line {
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      margin-bottom: 3rem;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    #torneos { background: var(--dark-mid); min-height: 100vh; }
+
+    .torneos-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .torneo-card {
+      border: 1px solid rgba(255,255,0,0.3);
+      background: linear-gradient(135deg, var(--dark-card) 0%, rgba(255,255,0,0.03) 100%);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .torneo-card::after {
+      content: '';
+      position: absolute;
+      top: -50%; right: -50%;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(255,255,0,0.1) 0%, transparent 70%);
+      transition: all 0.5s;
+      transform: scale(0);
+    }
+
+    .torneo-card:hover::after { transform: scale(2); }
+    .torneo-card:hover { border-color: var(--neon-yellow); box-shadow: 0 0 25px rgba(255,255,0,0.2); }
+
+    .torneo-status {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      letter-spacing: 2px;
+    }
+
+    .status-open { background: var(--neon-green); color: #000; }
+    .status-soon { background: var(--neon-yellow); color: #000; }
+    .status-closed { background: #444; color: #999; }
+
+    .torneo-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--neon-yellow);
+      margin-bottom: 0.5rem;
+    }
+
+    .torneo-meta {
+      font-size: 0.75rem;
+      color: rgba(224,224,255,0.5);
+      margin-bottom: 1rem;
+    }
+
+    .torneo-prize {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      color: var(--neon-green);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-torneo {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--neon-yellow);
+      color: var(--neon-yellow);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-torneo:hover {
+      background: var(--neon-yellow);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-yellow);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--dark-bg);
+      border-top: 1px solid rgba(0,245,255,0.2);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo span { color: var(--neon-pink); }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: rgba(224,224,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--neon-cyan); }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(224,224,255,0.3);
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 2px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      transition: all 0.2s;
+      opacity: 0;
+    }
+
+    .scroll-top.visible { opacity: 1; }
+    .scroll-top:hover { background: var(--neon-cyan); color: #000; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo" onclick="window.location='index.html'" style="cursor:pointer">F.G.<span>Z</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="arcade.html">Arcade</a></li>
+      <li><a href="torneos.html">Torneos</a></li>
+      <li><a href="tcg.html">TCG</a></li>
+      <li><a href="desarrollo.html">Dev</a></li>
+      <li><a href="reparaciones.html">Reparaciones</a></li>
+    </ul>
+  </nav>
+
+  <section id="torneos">
+    <div style="max-width:1100px;margin:0 auto;">
+      <p class="section-label">// Competencias</p>
+      <h2 class="section-title">Torneos <span class="accent">Activos</span></h2>
+      <div class="section-line"></div>
+      <div class="torneos-grid">
+        <div class="torneo-card">
+          <span class="torneo-status status-open">🟢 ABIERTO</span>
+          <h3>Street Fighter 6 Championship</h3>
+          <div class="torneo-meta">📅 15 de Abril · 🕐 4:00 PM · 👥 Max 32 jugadores</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: $500 USD</div>
+          <a href="inscripcion.html?torneo=sf6" class="btn-torneo">INSCRIBIRSE</a>
+        </div>
+        <div class="torneo-card">
+          <span class="torneo-status status-open">🟢 ABIERTO</span>
+          <h3>Pokémon TCG — Liga Mensual</h3>
+          <div class="torneo-meta">📅 20 de Abril · 🕐 2:00 PM · 👥 Max 64 jugadores</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: Packs + Trofeos</div>
+          <a href="inscripcion.html?torneo=pokemon" class="btn-torneo">INSCRIBIRSE</a>
+        </div>
+        <div class="torneo-card">
+          <span class="torneo-status status-soon">🟡 PRÓXIMAMENTE</span>
+          <h3>Tekken 8 — Open Series</h3>
+          <div class="torneo-meta">📅 1 de Mayo · 🕐 5:00 PM · 👥 Max 32 jugadores</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: $300 USD</div>
+          <a href="inscripcion.html?torneo=tekken8" class="btn-torneo">PRE-REGISTRO</a>
+        </div>
+        <div class="torneo-card">
+          <span class="torneo-status status-soon">🟡 PRÓXIMAMENTE</span>
+          <h3>Magic: The Gathering Draft</h3>
+          <div class="torneo-meta">📅 10 de Mayo · 🕐 12:00 PM · 👥 Max 24 jugadores</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: Store Credit + Cartas</div>
+          <a href="inscripcion.html?torneo=mtg" class="btn-torneo">PRE-REGISTRO</a>
+        </div>
+        <div class="torneo-card">
+          <span class="torneo-status status-closed">⚫ CERRADO</span>
+          <h3>Smash Bros Ultimate — Ranking</h3>
+          <div class="torneo-meta">📅 5 de Abril · Finalizado · 👥 28 jugadores</div>
+          <div class="torneo-prize">🏆 1er Lugar: MarioKnight99</div>
+          <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
+        </div>
+        <div class="torneo-card">
+          <span class="torneo-status status-open">🟢 ABIERTO</span>
+          <h3>Yu-Gi-Oh! — Battle City</h3>
+          <div class="torneo-meta">📅 22 de Abril · 🕐 1:00 PM · 👥 Max 32 jugadores</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: Blue-Eyes Ultimate Dragon Promo</div>
+          <a href="inscripcion.html?torneo=yugioh" class="btn-torneo">INSCRIBIRSE</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">F.G.<span>Z</span></div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="arcade.html">Arcade</a>
+      <a href="torneos.html">Torneos</a>
+      <a href="tcg.html">TCG</a>
+      <a href="desarrollo.html">Desarrollo</a>
+      <a href="reparaciones.html">Reparaciones</a>
+    </div>
+    <p class="footer-copy">© 2026 Final Game Zone — Todos los derechos reservados</p>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+  <script>
+    const scrollBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+</body>
+</html>
