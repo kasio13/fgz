@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Game Zone — Desarrollo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght=400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --neon-cyan: #00f5ff; --neon-pink: #ff0080; --neon-yellow: #ffff00; --neon-green: #39ff14; --neon-purple: #bf00ff; --dark-bg: #05050f; --dark-mid: #0a0a1a; --dark-card: #0d0d22; --grid-color: rgba(0,245,255,0.07); --text-main: #e0e0ff; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background-color:var(--dark-bg);color:var(--text-main);font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,15,.92);border-bottom:1px solid var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.3);display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
+    .nav-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan);letter-spacing:2px;cursor:pointer}
+    .nav-logo span{color:var(--neon-pink)}
+    .nav-links{display:flex;gap:1.5rem;list-style:none}
+    .nav-links a{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;color:var(--text-main);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s,text-shadow .2s}
+    .nav-links a:hover{color:var(--neon-cyan);text-shadow:0 0 8px var(--neon-cyan)}
+    section{position:relative;z-index:1;padding:8rem 2rem 5rem;min-height:100vh}
+    .section-label{font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:6px;color:var(--neon-pink);text-transform:uppercase;margin-bottom:.8rem}
+    .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:1rem}
+    .section-line{width:80px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));margin-bottom:3rem;box-shadow:0 0 10px var(--neon-cyan)}
+    .code-window{background:#000;border:1px solid var(--neon-green);box-shadow:0 0 30px rgba(57,255,20,.2);border-radius:4px;overflow:hidden;margin-bottom:3rem}
+    .code-titlebar{background:rgba(57,255,20,.1);padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(57,255,20,.3)}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.red{background:#ff5f57}.dot.yellow{background:#ffbd2e}.dot.green{background:#28ca41}
+    .code-content{padding:1.5rem;font-family:'Share Tech Mono',monospace;font-size:.8rem;line-height:1.8;color:var(--neon-green)}
+    .kw{color:var(--neon-pink)}.fn{color:var(--neon-cyan)}.str{color:var(--neon-yellow)}
+    .dev-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin:2rem 0}
+    .dev-card{border:1px solid rgba(57,255,20,.2);padding:1.5rem;background:var(--dark-card);transition:all .3s}
+    .dev-card:hover{border-color:var(--neon-green);box-shadow:0 0 20px rgba(57,255,20,.2);transform:translateY(-3px)}
+    .dev-card h4{font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:var(--neon-green);margin-bottom:.5rem}
+    .dev-card p{font-size:.8rem;color:rgba(224,224,255,.6);line-height:1.6}
+    footer{position:relative;z-index:1;background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
+    .footer-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);margin-bottom:1rem}
+    .footer-logo span{color:var(--neon-pink)}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--neon-cyan)}
+    .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
+    @media(max-width:768px){.nav-links{display:none}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="arcade.html">Arcade</a></li>
+      <li><a href="torneos.html">Torneos</a></li>
+      <li><a href="tcg.html">TCG</a></li>
+      <li><a href="desarrollo.html">Dev</a></li>
+      <li><a href="reparaciones.html">Reparaciones</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <p class="section-label">// Game Studio</p>
+      <h1 class="section-title">💻 DESARROLLO DE JUEGOS</h1>
+      <div class="section-line"></div>
+
+      <div class="code-window">
+        <div class="code-titlebar">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+          <span style="font-family: 'Share Tech Mono'; color: rgba(57,255,20,.7); margin-left: .5rem;">game_engine.js — FGZ Studio</span>
+        </div>
+        <div class="code-content">
+<span class="kw">class</span> <span class="fn">GameEngine</span> {
+  <span class="fn">constructor</span>() {
+    <span class="kw">this</span>.fps = <span class="str">60</span>;
+    <span class="kw">this</span>.scenes = [];
+    <span class="kw">this</span>.player = <span class="kw">new</span> <span class="fn">Player</span>();
+  }
+  
+  <span class="fn">launch</span>() {
+    <span class="kw">return</span> <span class="str">"✅ Juego iniciado!"</span>;
+  }
+}
+        </div>
+      </div>
+
+      <div class="dev-services">
+        <div class="dev-card">
+          <h4>🎮 Videojuegos Indie</h4>
+          <p>Desarrollamos juegos 2D y 3D desde concepto hasta publicación en Steam, itch.io, consolas y móviles.</p>
+        </div>
+        <div class="dev-card">
+          <h4>📱 Apps Gaming</h4>
+          <p>Aplicaciones móviles para iOS y Android con mecánicas de juego, ranking y monetización integrada.</p>
+        </div>
+        <div class="dev-card">
+          <h4>🕹️ Arcade Custom</h4>
+          <p>Programación de ROMs personalizadas, conversiones de PCBs y desarrollo de firmware para arcades.</p>
+        </div>
+        <div class="dev-card">
+          <h4>🌐 Plataformas Web</h4>
+          <p>Portales de torneos, gestores de tienda TCG, sistemas de ranking y comunidades gaming online.</p>
+        </div>
+        <div class="dev-card">
+          <h4>🤖 Game Mods</h4>
+          <p>Modificaciones, parches y contenido adicional para juegos existentes en todas las plataformas.</p>
+        </div>
+        <div class="dev-card">
+          <h4>📊 Herramientas TCG</h4>
+          <p>Software de gestión de colecciones, deckbuilders y herramientas analíticas para jugadores competitivos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">F.G.<span>Z</span></div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a><a href="arcade.html">Arcade</a><a href="torneos.html">Torneos</a><a href="tcg.html">TCG</a><a href="reparaciones.html">Reparaciones</a>
+    </div>
+    <p class="footer-copy">© 2026 Final Game Zone</p>
+  </footer>
+</body>
+</html>

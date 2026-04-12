@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Game Zone — Consolas & Hardware</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght=400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --neon-cyan: #00f5ff; --neon-pink: #ff0080; --neon-yellow: #ffff00; --neon-green: #39ff14; --neon-purple: #bf00ff; --dark-bg: #05050f; --dark-mid: #0a0a1a; --dark-card: #0d0d22; --grid-color: rgba(0,245,255,0.07); --text-main: #e0e0ff; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background-color:var(--dark-bg);color:var(--text-main);font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,15,.92);border-bottom:1px solid var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.3);display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
+    .nav-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan);letter-spacing:2px;cursor:pointer}
+    .nav-logo span{color:var(--neon-pink)}
+    .nav-links{display:flex;gap:1.5rem;list-style:none}
+    .nav-links a{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;color:var(--text-main);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s,text-shadow .2s}
+    .nav-links a:hover{color:var(--neon-cyan);text-shadow:0 0 8px var(--neon-cyan)}
+    section{position:relative;z-index:1;padding:8rem 2rem 5rem;min-height:100vh}
+    .section-label{font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:6px;color:var(--neon-pink);text-transform:uppercase;margin-bottom:.8rem}
+    .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:1rem}
+    .section-line{width:80px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));margin-bottom:3rem;box-shadow:0 0 10px var(--neon-cyan)}
+    .consolas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+    .consola-card{background:var(--dark-card);border:1px solid rgba(0,245,255,.2);padding:1.5rem;text-align:center;transition:all .3s}
+    .consola-card:hover{border-color:var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.2);transform:translateY(-5px)}
+    .consola-icon{font-size:3rem;margin-bottom:1rem}
+    .consola-card h4{font-family:'Orbitron';color:var(--neon-cyan);margin-bottom:.5rem}
+    .consola-precio{font-family:'Press Start 2P';font-size:.8rem;color:var(--neon-green);margin-top:1rem}
+    footer{position:relative;z-index:1;background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
+    .footer-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);margin-bottom:1rem}
+    .footer-logo span{color:var(--neon-pink)}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--neon-cyan)}
+    .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
+    @media(max-width:768px){.nav-links{display:none}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="arcade.html">Arcade</a></li>
+      <li><a href="torneos.html">Torneos</a></li>
+      <li><a href="tcg.html">TCG</a></li>
+      <li><a href="desarrollo.html">Dev</a></li>
+      <li><a href="reparaciones.html">Reparaciones</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <p class="section-label">// Tienda</p>
+      <h1 class="section-title">🎮 CONSOLAS & HARDWARE</h1>
+      <div class="section-line"></div>
+
+      <p style="max-width: 800px; font-size: 1rem; line-height: 1.8; color: rgba(224,224,255,0.7); margin-bottom: 2rem;">
+        Venta de consolas nuevas y usadas, accesorios, controllers mod y hardware gaming. Todas las consolas son probadas y cuentan con garantía oficial.
+      </p>
+
+      <div class="consolas-grid">
+        <div class="consola-card">
+          <div class="consola-icon">🎮</div>
+          <h4>PlayStation 5</h4>
+          <p>Slim / Pro / Standard</p>
+          <div class="consola-precio">DESDE $499</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🟢</div>
+          <h4>Xbox Series X/S</h4>
+          <p>Todas las versiones</p>
+          <div class="consola-precio">DESDE $299</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🔴🔵</div>
+          <h4>Nintendo Switch</h4>
+          <p>OLED / Standard / Lite</p>
+          <div class="consola-precio">DESDE $199</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🕹️</div>
+          <h4>Consolas Retro</h4>
+          <p>NES, SNES, N64, PS1, PS2</p>
+          <div class="consola-precio">CONSULTAR</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🎯</div>
+          <h4>Controles Custom</h4>
+          <p>Modificados, hall effect, botones</p>
+          <div class="consola-precio">DESDE $60</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🔌</div>
+          <h4>Accesorios</h4>
+          <p>Cables, cargadores, protectores</p>
+          <div class="consola-precio">DESDE $5</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">F.G.<span>Z</span></div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a><a href="arcade.html">Arcade</a><a href="torneos.html">Torneos</a><a href="tcg.html">TCG</a><a href="desarrollo.html">Desarrollo</a><a href="reparaciones.html">Reparaciones</a>
+    </div>
+    <p class="footer-copy">© 2026 Final Game Zone</p>
+  </footer>
+</body>
+</html>
