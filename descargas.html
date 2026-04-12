@@ -63,13 +63,19 @@
     .modal-close{position:absolute;top:20px;right:20px;font-size:2rem;color:#fff;cursor:pointer;transition:color .2s}
     .modal-close:hover{color:var(--neon-pink)}
     .modal-title{color:var(--neon-cyan);font-family:'Orbitron';margin-top:1rem;font-size:1rem}
+    .modal-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(191,0,255,.8);border:none;color:#fff;width:50px;height:50px;border-radius:50%;cursor:pointer;font-size:1.5rem;transition:background .2s}
+    .modal-nav:hover{background:var(--neon-purple)}
+    .modal-nav.prev{left:20px}
+    .modal-nav.next{right:20px}
   </style>
 </head>
 <body>
-  <div class="modal" id="imageModal" onclick="this.classList.remove('active')">
-    <span class="modal-close">✕</span>
+  <div class="modal" id="imageModal" onclick="closeModal(event)">
+    <span class="modal-close" onclick="document.getElementById('imageModal').classList.remove('active')">✕</span>
+    <button class="modal-nav prev" onclick="navigateModal(event,-1)">◀</button>
     <img src="" class="modal-img" id="modalImg">
     <p class="modal-title" id="modalTitle"></p>
+    <button class="modal-nav next" onclick="navigateModal(event,1)">▶</button>
   </div>
   <nav>
     <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
@@ -153,12 +159,18 @@
           <p class="download-size">📦 APK • Registro de Objetos</p>
           <div class="download-preview">
             <p class="preview-label">Vista Previa</p>
-            <div class="preview-carousel">
+            <div class="preview-carousel" data-slides="5">
               <div class="carousel-slide active"><img src="images/work 1.jpeg" alt="Preview 1" onclick="openModal(this.src,'Work Manager - Vista 1')"></div>
               <div class="carousel-slide"><img src="images/work 2.jpeg" alt="Preview 2" onclick="openModal(this.src,'Work Manager - Vista 2')"></div>
+              <div class="carousel-slide"><img src="images/work 3.png" alt="Preview 3" onclick="openModal(this.src,'Work Manager - Vista 3')"></div>
+              <div class="carousel-slide"><img src="images/work 4.png" alt="Preview 4" onclick="openModal(this.src,'Work Manager - Vista 4')"></div>
+              <div class="carousel-slide"><img src="images/work 5.png" alt="Preview 5" onclick="openModal(this.src,'Work Manager - Vista 5')"></div>
               <div class="carousel-dots">
                 <span class="carousel-dot active" onclick="changeSlide(this,0)"></span>
                 <span class="carousel-dot" onclick="changeSlide(this,1)"></span>
+                <span class="carousel-dot" onclick="changeSlide(this,2)"></span>
+                <span class="carousel-dot" onclick="changeSlide(this,3)"></span>
+                <span class="carousel-dot" onclick="changeSlide(this,4)"></span>
               </div>
               <button class="preview-nav prev" onclick="moveSlide(this,-1)">◀</button>
               <button class="preview-nav next" onclick="moveSlide(this,1)">▶</button>
@@ -210,10 +222,25 @@
       dots.forEach((d,i)=>d.classList.toggle('active',i===newIndex));
     }
     function openModal(src,title){
-      document.getElementById('modalImg').src=src;
-      document.getElementById('modalTitle').textContent=title;
+      window.modalImages = Array.from(document.querySelectorAll('.carousel-slide img')).map(img => ({
+        src: img.src,
+        title: img.alt
+      }));
+      window.currentModalIndex = window.modalImages.findIndex(img => img.src === src);
+      document.getElementById('modalImg').src = src;
+      document.getElementById('modalTitle').textContent = title;
       document.getElementById('imageModal').classList.add('active');
       event.stopPropagation();
+    }
+    function closeModal(e){
+      if(e.target.id === 'imageModal') document.getElementById('imageModal').classList.remove('active');
+    }
+    function navigateModal(e,dir){
+      e.stopPropagation();
+      window.currentModalIndex = (window.currentModalIndex + dir + window.modalImages.length) % window.modalImages.length;
+      const img = window.modalImages[window.currentModalIndex];
+      document.getElementById('modalImg').src = img.src;
+      document.getElementById('modalTitle').textContent = img.title;
     }
     // Auto rotate carousel
     setInterval(()=>{
