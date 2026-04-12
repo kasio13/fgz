@@ -46,9 +46,31 @@
     .footer-links a:hover{color:var(--neon-cyan)}
     .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
     @media(max-width:768px){.nav-links{display:none}.download-preview{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);bottom:auto}.download-card:hover .download-preview{top:calc(50% - 150px);bottom:auto}}
+    .preview-carousel{position:relative;width:100%;height:150px;overflow:hidden;border-radius:4px;margin-bottom:.5rem;background:var(--dark-mid)}
+    .carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity .5s}
+    .carousel-slide.active{opacity:1}
+    .carousel-slide img{width:100%;height:100%;object-fit:cover}
+    .carousel-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+    .carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s}
+    .carousel-dot.active{background:var(--neon-purple)}
+    .preview-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:12px;transition:background .2s}
+    .preview-nav:hover{background:var(--neon-purple)}
+    .preview-nav.prev{left:5px}
+    .preview-nav.next{right:5px}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
+    .modal.active{display:flex}
+    .modal-img{max-width:90%;max-height:80vh;border-radius:8px;border:2px solid var(--neon-purple);box-shadow:0 0 40px rgba(191,0,255,.5)}
+    .modal-close{position:absolute;top:20px;right:20px;font-size:2rem;color:#fff;cursor:pointer;transition:color .2s}
+    .modal-close:hover{color:var(--neon-pink)}
+    .modal-title{color:var(--neon-cyan);font-family:'Orbitron';margin-top:1rem;font-size:1rem}
   </style>
 </head>
 <body>
+  <div class="modal" id="imageModal" onclick="this.classList.remove('active')">
+    <span class="modal-close">✕</span>
+    <img src="" class="modal-img" id="modalImg">
+    <p class="modal-title" id="modalTitle"></p>
+  </div>
   <nav>
     <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
     <ul class="nav-links">
@@ -80,8 +102,16 @@
           <p class="download-size">📦 APK • Yu-Gi-Oh! Deck Organizer</p>
           <div class="download-preview">
             <p class="preview-label">Vista Previa</p>
-            <img src="images/1.jpg" alt="Preview 1" class="preview-img">
-            <img src="images/2.jpg" alt="Preview 2" class="preview-img">
+            <div class="preview-carousel">
+              <div class="carousel-slide active"><img src="images/1.jpg" alt="Preview 1" onclick="openModal(this.src,'TCG Collector - Vista 1')"></div>
+              <div class="carousel-slide"><img src="images/2.jpg" alt="Preview 2" onclick="openModal(this.src,'TCG Collector - Vista 2')"></div>
+              <div class="carousel-dots">
+                <span class="carousel-dot active" onclick="changeSlide(this,0)"></span>
+                <span class="carousel-dot" onclick="changeSlide(this,1)"></span>
+              </div>
+              <button class="preview-nav prev" onclick="moveSlide(this,-1)">◀</button>
+              <button class="preview-nav next" onclick="moveSlide(this,1)">▶</button>
+            </div>
             <p class="preview-info">Organiza tus cartas en carpetas personalizadas. Crea y gestiona mazos de Yu-Gi-Oh!. Exporta a PDF.</p>
             <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/tcg-collector/TCG-Collector.apk" target="_blank" class="preview-btn">▶ DESCARGAR</a>
           </div>
@@ -133,5 +163,39 @@
     </div>
     <p class="footer-copy">© 2026 Final Game Zone</p>
   </footer>
+
+  <script>
+    function changeSlide(dot,index){
+      const carousel=dot.closest('.preview-carousel');
+      carousel.querySelectorAll('.carousel-slide').forEach((s,i)=>s.classList.toggle('active',i===index));
+      carousel.querySelectorAll('.carousel-dot').forEach((d,i)=>d.classList.toggle('active',i===index));
+    }
+    function moveSlide(btn,dir){
+      const carousel=btn.closest('.preview-carousel');
+      const slides=carousel.querySelectorAll('.carousel-slide');
+      const dots=carousel.querySelectorAll('.carousel-dot');
+      let activeIndex=Array.from(slides).findIndex(s=>s.classList.active');
+      let newIndex=(activeIndex+dir+slides.length)%slides.length;
+      slides.forEach((s,i)=>s.classList.toggle('active',i===newIndex));
+      dots.forEach((d,i)=>d.classList.toggle('active',i===newIndex));
+    }
+    function openModal(src,title){
+      document.getElementById('modalImg').src=src;
+      document.getElementById('modalTitle').textContent=title;
+      document.getElementById('imageModal').classList.add('active');
+      event.stopPropagation();
+    }
+    // Auto rotate carousel
+    setInterval(()=>{
+      document.querySelectorAll('.preview-carousel').forEach(carousel=>{
+        const slides=carousel.querySelectorAll('.carousel-slide');
+        const dots=carousel.querySelectorAll('.carousel-dot');
+        let activeIndex=Array.from(slides).findIndex(s=>s.classList.contains('active'));
+        let newIndex=(activeIndex+1)%slides.length;
+        slides.forEach((s,i)=>s.classList.toggle('active',i===newIndex));
+        dots.forEach((d,i)=>d.classList.toggle('active',i===newIndex));
+      });
+    },3000);
+  </script>
 </body>
 </html>
