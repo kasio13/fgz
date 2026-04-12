@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Final Game Zone — Descargas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght=400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root { --neon-cyan: #00f5ff; --neon-pink: #ff0080; --neon-yellow: #ffff00; --neon-green: #39ff14; --neon-purple: #bf00ff; --dark-bg: #05050f; --dark-mid: #0a0a1a; --dark-card: #0d0d22; --grid-color: rgba(0,245,255,0.07); --text-main: #e0e0ff; }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -23,14 +23,21 @@
     .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:1rem}
     .section-line{width:80px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));margin-bottom:3rem;box-shadow:0 0 10px var(--neon-cyan)}
     .downloads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
-    .download-card{background:var(--dark-card);border:1px solid rgba(191,0,255,.2);padding:1.5rem;transition:all .3s}
+    .download-card{background:var(--dark-card);border:1px solid rgba(191,0,255,.2);padding:1.5rem;transition:all .3s;position:relative}
     .download-card:hover{border-color:var(--neon-purple);box-shadow:0 0 20px rgba(191,0,255,.2);transform:translateY(-5px)}
-    .download-icon{font-size:2.5rem;margin-bottom:1rem}
-    .download-card h4{font-family:'Orbitron';color:var(--neon-purple);margin-bottom:.5rem}
-    .download-desc{font-size:.85rem;color:rgba(224,224,255,.6);margin-bottom:1rem;line-height:1.6}
-    .download-size{font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-cyan);margin-bottom:1rem}
-    .download-btn{display:inline-block;font-family:'Orbitron';font-size:.7rem;padding:.6rem 1.5rem;border:1px solid var(--neon-purple);color:var(--neon-purple);text-decoration:none;transition:all .2s}
+    .download-icon{width:80px;height:80px;margin:0 auto 1rem;display:block;border-radius:8px;object-fit:cover}
+    .download-card h4{font-family:'Orbitron';color:var(--neon-purple);margin-bottom:.5rem;text-align:center}
+    .download-desc{font-size:.85rem;color:rgba(224,224,255,.6);margin-bottom:1rem;line-height:1.6;text-align:center}
+    .download-size{font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-cyan);margin-bottom:1rem;text-align:center}
+    .download-btn{display:inline-block;font-family:'Orbitron';font-size:.7rem;padding:.6rem 1.5rem;border:1px solid var(--neon-purple);color:var(--neon-purple);text-decoration:none;transition:all .2s;display:block;width:fit-content;margin:0 auto}
     .download-btn:hover{background:var(--neon-purple);color:#000;box-shadow:0 0 15px var(--neon-purple)}
+    .download-preview{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--dark-bg);border:2px solid var(--neon-purple);padding:1rem;border-radius:8px;width:280px;opacity:0;visibility:hidden;transition:all .3s;z-index:10;box-shadow:0 0 30px rgba(191,0,255,.4)}
+    .download-card:hover .download-preview{opacity:1;visibility:visible;bottom:calc(100% + 10px)}
+    .preview-img{width:100%;border-radius:4px;margin-bottom:.5rem;border:1px solid rgba(191,0,255,.3)}
+    .preview-label{font-family:'Press Start 2P';font-size:.4rem;color:var(--neon-cyan);text-align:center;margin-bottom:.5rem}
+    .preview-info{font-size:.75rem;color:rgba(224,224,255,.7);text-align:center;margin-bottom:1rem;line-height:1.5}
+    .preview-btn{display:block;font-family:'Orbitron';font-size:.6rem;padding:.5rem 1rem;background:var(--neon-purple);color:#000;text-decoration:none;text-align:center;border-radius:4px;transition:box-shadow .2s}
+    .preview-btn:hover{box-shadow:0 0 15px var(--neon-purple)}
     footer{position:relative;z-index:1;background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
     .footer-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);margin-bottom:1rem}
     .footer-logo span{color:var(--neon-pink)}
@@ -38,7 +45,7 @@
     .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
     .footer-links a:hover{color:var(--neon-cyan)}
     .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
-    @media(max-width:768px){.nav-links{display:none}}
+    @media(max-width:768px){.nav-links{display:none}.download-preview{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);bottom:auto}.download-card:hover .download-preview{top:calc(50% - 150px);bottom:auto}}
   </style>
 </head>
 <body>
@@ -67,42 +74,49 @@
 
       <div class="downloads-grid">
         <div class="download-card">
-          <div class="download-icon">⚙️</div>
+          <img src="images/ico.png" alt="TCG Collector" class="download-icon">
+          <h4>TCG Collector - Yu-Gi-Oh!</h4>
+          <p class="download-desc">App para organizar tus cartas y mazos. Crea carpetas, construye decks, busca cartas y exporta a PDF.</p>
+          <p class="download-size">📦 APK • Yu-Gi-Oh! Deck Organizer</p>
+          <div class="download-preview">
+            <p class="preview-label">Vista Previa</p>
+            <img src="images/1.jpg" alt="Preview 1" class="preview-img">
+            <img src="images/2.jpg" alt="Preview 2" class="preview-img">
+            <p class="preview-info">Organiza tus cartas en carpetas personalizadas. Crea y gestiona mazos de Yu-Gi-Oh!. Exporta a PDF.</p>
+            <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/tcg-collector/TCG-Collector.apk" target="_blank" class="preview-btn">▶ DESCARGAR</a>
+          </div>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/tcg-collector/TCG-Collector.apk" target="_blank" class="download-btn">DESCARGAR</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon" style="background:rgba(57,255,20,.1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">⚙️</div>
           <h4>FGZ Tournament App</h4>
           <p class="download-desc">Aplicacion oficial para inscripciones, rankings y resultados de torneos FGZ</p>
           <p class="download-size">📦 12.5 MB • v1.2.0</p>
           <a href="#" class="download-btn">DESCARGAR</a>
         </div>
         <div class="download-card">
-          <div class="download-icon">🎮</div>
+          <div class="download-icon" style="background:rgba(255,0,128,.1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎮</div>
           <h4>Pack Emuladores Retro</h4>
           <p class="download-desc">Coleccion completa de emuladores configurados para todos los sistemas retro</p>
           <p class="download-size">📦 850 MB • 2026</p>
           <a href="#" class="download-btn">DESCARGAR</a>
         </div>
         <div class="download-card">
-          <div class="download-icon">🃏</div>
-          <h4>TCG Collector - Yu-Gi-Oh!</h4>
-          <p class="download-desc">App para organizar tus cartas y mazos. Crea carpetas, construye decks, busca cartas y exporta a PDF.</p>
-          <p class="download-size">📦 APK • Yu-Gi-Oh! Deck Organizer</p>
-          <a href="https://archive.org/download/tcg-collector/TCG-Collector.apk" target="_blank" class="download-btn">DESCARGAR</a>
-        </div>
-        <div class="download-card">
-          <div class="download-icon">🕹️</div>
+          <div class="download-icon" style="background:rgba(255,255,0,.1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🕹️</div>
           <h4>Drivers Arcade USB</h4>
           <p class="download-desc">Drivers y software para joysticks, controles arcade y encoders</p>
           <p class="download-size">📦 8.2 MB • v3.0</p>
           <a href="#" class="download-btn">DESCARGAR</a>
         </div>
         <div class="download-card">
-          <div class="download-icon">📋</div>
+          <div class="download-icon" style="background:rgba(0,245,255,.1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">📋</div>
           <h4>Reglas Oficiales Torneos</h4>
           <p class="download-desc">Documento PDF con reglamento completo de todos los torneos FGZ</p>
           <p class="download-size">📦 1.2 MB • PDF</p>
           <a href="#" class="download-btn">DESCARGAR</a>
         </div>
         <div class="download-card">
-          <div class="download-icon">🎨</div>
+          <div class="download-icon" style="background:rgba(191,0,255,.1);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎨</div>
           <h4>Pack Wallpapers FGZ</h4>
           <p class="download-desc">Coleccion de wallpapers 4K oficiales de Final Game Zone</p>
           <p class="download-size">📦 120 MB • Pack 1</p>
