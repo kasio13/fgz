@@ -174,7 +174,7 @@
       const carousel=btn.closest('.preview-carousel');
       const slides=carousel.querySelectorAll('.carousel-slide');
       const dots=carousel.querySelectorAll('.carousel-dot');
-      let activeIndex=Array.from(slides).findIndex(s=>s.classList.active');
+      let activeIndex=Array.from(slides).findIndex(s=>s.classList.contains('active'));
       let newIndex=(activeIndex+dir+slides.length)%slides.length;
       slides.forEach((s,i)=>s.classList.toggle('active',i===newIndex));
       dots.forEach((d,i)=>d.classList.toggle('active',i===newIndex));
