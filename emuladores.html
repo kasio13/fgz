@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final Game Zone — Pack Emuladores Retro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --neon-cyan: #00f5ff; --neon-pink: #ff0080; --neon-yellow: #ffff00; --neon-green: #39ff14; --neon-purple: #bf00ff; --dark-bg: #05050f; --dark-mid: #0a0a1a; --dark-card: #0d0d22; --grid-color: rgba(0,245,255,0.07); --text-main: #e0e0ff; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background-color:var(--dark-bg);color:var(--text-main);font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.15) 3px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:9999}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,15,.92);border-bottom:1px solid var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.3);display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
+    .nav-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan),0 0 30px var(--neon-cyan);letter-spacing:2px;cursor:pointer}
+    .nav-logo span{color:var(--neon-pink)}
+    .nav-links{display:flex;gap:1.5rem;list-style:none}
+    .nav-links a{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;color:var(--text-main);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s,text-shadow .2s}
+    .nav-links a:hover{color:var(--neon-cyan);text-shadow:0 0 8px var(--neon-cyan)}
+    section{position:relative;z-index:1;padding:8rem 2rem 5rem;min-height:100vh}
+    .section-label{font-family:'Press Start 2P',monospace;font-size:.55rem;letter-spacing:6px;color:var(--neon-pink);text-transform:uppercase;margin-bottom:.8rem}
+    .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:1rem}
+    .section-line{width:80px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));margin-bottom:3rem;box-shadow:0 0 10px var(--neon-cyan)}
+    .emulators-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+    .emulator-card{background:var(--dark-card);border:1px solid rgba(255,0,128,.2);padding:1.5rem;transition:all .3s}
+    .emulator-card:hover{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,128,.2);transform:translateY(-5px)}
+    .emulator-icon{font-size:3rem;margin-bottom:1rem;text-align:center}
+    .emulator-card h4{font-family:'Orbitron';color:var(--neon-pink);margin-bottom:.5rem;text-align:center}
+    .emulator-desc{font-size:.85rem;color:rgba(224,224,255,.6);margin-bottom:1rem;text-align:center;line-height:1.6}
+    .emulator-link{font-size:.7rem;color:var(--neon-cyan);text-align:center;display:block;margin-bottom:1rem}
+    .download-btn{display:block;font-family:'Orbitron';font-size:.7rem;padding:.6rem 1.5rem;border:1px solid var(--neon-pink);color:var(--neon-pink);text-decoration:none;text-align:center;transition:all .2s}
+    .download-btn:hover{background:var(--neon-pink);color:#000;box-shadow:0 0 15px var(--neon-pink)}
+    .guide-section{max-width:900px;margin:4rem auto 0;padding:2rem;background:var(--dark-card);border:1px solid var(--neon-cyan)}
+    .guide-section h3{font-family:'Orbitron';color:var(--neon-cyan);margin-bottom:1.5rem;font-size:1.3rem}
+    .guide-step{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+    .step-num{font-family:'Press Start 2P';font-size:.8rem;color:var(--neon-yellow);min-width:30px}
+    .step-content{font-size:.9rem;line-height:1.7;color:rgba(224,224,255,.8)}
+    .step-content strong{color:var(--neon-cyan)}
+    footer{position:relative;z-index:1;background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
+    .footer-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);margin-bottom:1rem}
+    .footer-logo span{color:var(--neon-pink)}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--neon-cyan)}
+    .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
+    @media(max-width:768px){.nav-links{display:none}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo" onclick="window.location='index.html'">F.G.<span>Z</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="arcade.html">Arcade</a></li>
+      <li><a href="torneos.html">Torneos</a></li>
+      <li><a href="tcg.html">TCG</a></li>
+      <li><a href="desarrollo.html">Dev</a></li>
+      <li><a href="reparaciones.html">Reparaciones</a></li>
+      <li><a href="descargas.html">Descargas</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <p class="section-label">// Emuladores</p>
+      <h1 class="section-title">🎮 PACK EMULADORES RETRO</h1>
+      <div class="section-line"></div>
+
+      <p style="max-width: 800px; font-size: 1rem; line-height: 1.8; color: rgba(224,224,255,0.7); margin-bottom: 3rem;">
+        Todo lo que necesitas para jugar tus juegos favoritos. Descarga el emulador oficial y las ROMs de las mejores consolas retro.
+      </p>
+
+      <div class="emulators-grid">
+        <div class="emulator-card">
+          <div class="emulator-icon">🎯</div>
+          <h4>RetroArch</h4>
+          <p class="emulator-desc">El emulador multi-plataforma definitivo. Soporta cientos de sistemas retro en un solo programa.</p>
+          <a href="https://www.retroarch.com/" target="_blank" class="emulator-link">🌐 retroarch.com</a>
+          <a href="https://www.retroarch.com/" target="_blank" class="download-btn">IR A DESCARGAR</a>
+        </div>
+
+        <div class="emulator-card">
+          <div class="emulator-icon">🔴</div>
+          <h4>NES - Nintendo</h4>
+          <p class="emulator-desc">1500+ juegos经典的 NES. Mario, Zelda, Mega Man, Castlevania y muchos más.</p>
+          <p style="font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-green);text-align:center;margin-bottom:1rem;">📦 7.5 GB</p>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/NESMegaPack201808/ROMS.zip" target="_blank" class="download-btn">DESCARGAR ROMS</a>
+        </div>
+
+        <div class="emulator-card">
+          <div class="emulator-icon">🟣</div>
+          <h4>SNES - Super Nintendo</h4>
+          <p class="emulator-desc">La mejor consola de 16 bits. Todos los juegos classics de Super Mario, Metroid, Chrono Trigger y más.</p>
+          <p style="font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-green);text-align:center;margin-bottom:1rem;">📦 12 GB</p>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/snes-usa-romset-complete-collection.-7z/SNES%20USA%20Romset%20-%20Complete%20Collection.7z" target="_blank" class="download-btn">DESCARGAR ROMS</a>
+        </div>
+
+        <div class="emulator-card">
+          <div class="emulator-icon">🟢</div>
+          <h4>N64 - Nintendo 64</h4>
+          <p class="emulator-desc">La revolucion 3D de Nintendo. Mario 64, Zelda Ocarina, GoldenEye, Smash Bros y más.</p>
+          <p style="font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-green);text-align:center;margin-bottom:1rem;">📦 15 GB</p>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/roms-bestset-nintendo-64" target="_blank" class="download-btn">DESCARGAR ROMS</a>
+        </div>
+
+        <div class="emulator-card">
+          <div class="emulator-icon">🔵</div>
+          <h4>Sega Genesis / Mega Drive</h4>
+          <p class="emulator-desc">La consola de Sonic. Juegos míticos como Streets of Rage, Sonic, Mortal Kombat y más.</p>
+          <p style="font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-green);text-align:center;margin-bottom:1rem;">📦 10 GB</p>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/sega-genesis-romset-ultra-usa" target="_blank" class="download-btn">DESCARGAR ROMS</a>
+        </div>
+
+        <div class="emulator-card">
+          <div class="emulator-icon">🟡</div>
+          <h4>Sega Master System</h4>
+          <p class="emulator-desc">La consola predecesora de Genesis. Alex Kidd, Sonic y muchos clásicos.</p>
+          <p style="font-family:'Press Start 2P';font-size:.5rem;color:var(--neon-green);text-align:center;margin-bottom:1rem;">📦 1.5 GB</p>
+          <a href="https://shortni.com/st?api=3ec4c3eaed3d03584094b647bdfa9b44a5493938&url=https://archive.org/download/sms_20240311/SMS.zip" target="_blank" class="download-btn">DESCARGAR ROMS</a>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📖 GUÍA RÁPIDA: Cómo agregar juegos a RetroArch</h3>
+        
+        <div class="guide-step">
+          <span class="step-num">01</span>
+          <div class="step-content">
+            <strong>Descarga e instala RetroArch</strong><br>
+            Ve a <a href="https://www.retroarch.com/" target="_blank" style="color:var(--neon-cyan)">retroarch.com</a> y descarga la versión para tu sistema operativo (Windows, Android, etc).
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <span class="step-num">02</span>
+          <div class="step-content">
+            <strong>Descarga los cores (emuladores)</strong><br>
+            En RetroArch ve a <strong>Online Updater → Core Updater</strong> y descarga los cores que necesites:
+            <br>• NES → Nestopia / Mesen
+            <br>• SNES → Snes9x / bsnes
+            <br>• N64 → Mupen64Plus
+            <br>• Genesis → Genesis Plus GX
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <span class="step-num">03</span>
+          <div class="step-content">
+            <strong>Crea carpeta para tus ROMs</strong><br>
+            Crea una carpeta llamada "ROMs" en tu PC. Dentro crea subcarpetas por consola: NES, SNES, N64, Genesis, etc.
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <span class="step-num">04</span>
+          <div class="step-content">
+            <strong>Agrega contenido a RetroArch</strong><br>
+            Ve a <strong>Settings → Directory → File Browser</strong> y selecciona tu carpeta de ROMs. También puedes usar <strong>Scan Directory</strong> para que RetroArch detecte automáticamente todos tus juegos.
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <span class="step-num">05</span>
+          <div class="step-content">
+            <strong>¡Juega!</strong><br>
+            Desde el menú principal ve a <strong>Load Content → Collections</strong> y verás todos tus juegos organizados por consola. ¡Selecciona uno y disfruta!
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <span class="step-num">💡</span>
+          <div class="step-content">
+            <strong>Consejo extra:</strong> Para mejores resultados, descarga los archivos ".zip" o ".7z" y extráelos antes de agregar las ROMs a RetroArch.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">F.G.<span>Z</span></div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a><a href="arcade.html">Arcade</a><a href="torneos.html">Torneos</a><a href="tcg.html">TCG</a><a href="desarrollo.html">Desarrollo</a><a href="reparaciones.html">Reparaciones</a><a href="descargas.html">Descargas</a>
+    </div>
+    <p class="footer-copy">© 2026 Final Game Zone</p>
+  </footer>
+</body>
+</html>
