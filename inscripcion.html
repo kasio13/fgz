@@ -318,9 +318,8 @@
           <p id="torneo-premio"></p>
         </div>
 
-        <form name="inscripcion-torneo" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form" id="form-inscripcion">
-          <input type="hidden" name="form-name" value="inscripcion-torneo" />
-          <p class="hidden" style="display:none"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+        <form action="https://formspree.io/f/mzzjzpyo" method="POST" class="contact-form" id="form-inscripcion">
+          <input type="hidden" name="torneo" id="torneo-input" />
           
           <input type="text" id="reg-nombre" name="nombre" placeholder="Tu nombre completo" required />
           <input type="text" id="reg-gamertag" name="gamertag" placeholder="Gamertag / Nombre en juego" required />
@@ -376,11 +375,12 @@
       document.getElementById('torneo-nombre').textContent = t.nombre;
       document.getElementById('torneo-detalles').textContent = t.detalles;
       document.getElementById('torneo-premio').textContent = t.premio;
+      document.getElementById('torneo-input').value = t.nombre;
     } else {
       document.getElementById('torneo-nombre').textContent = "Torneo General";
     }
 
-    // Para Netlify Forms
+    // Para Formspree
     if(window.location.search.includes('success')) {
       document.getElementById('form-inscripcion').style.display = 'none';
       document.getElementById('inscripcion-exito').style.display = 'block';

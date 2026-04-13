@@ -1028,10 +1028,10 @@
     <div class="section-line" style="margin:0 auto 2rem;"></div>
     <div class="contact-box">
       <p style="font-size:0.85rem;color:rgba(224,224,255,0.6);margin-bottom:0.5rem;">¿Tienes preguntas sobre torneos, reparaciones, desarrollo o TCG? En Final Game Zone estamos listos para ayudarte.</p>
-      <div class="contact-form">
-        <input type="text" placeholder="Tu nombre" />
-        <input type="email" placeholder="Tu correo electrónico" />
-        <select>
+      <form action="https://formspree.io/f/mzzjzpyo" method="POST" class="contact-form">
+        <input type="text" name="nombre" placeholder="Tu nombre" required />
+        <input type="email" name="correo" placeholder="Tu correo electrónico" required />
+        <select name="servicio" required>
           <option value="">— Selecciona un servicio —</option>
           <option>Arcade / Consolas</option>
           <option>Reparaciones</option>
@@ -1040,9 +1040,9 @@
           <option>Desarrollo de Software</option>
           <option>Otro</option>
         </select>
-        <textarea placeholder="Cuéntanos en qué te podemos ayudar..."></textarea>
-        <button class="btn-submit">▶ ENVIAR MENSAJE</button>
-      </div>
+        <textarea name="mensaje" placeholder="Cuéntanos en qué te podemos ayudar..." required></textarea>
+        <button type="submit" class="btn-submit">▶ ENVIAR MENSAJE</button>
+      </form>
     </div>
   </section>
 
