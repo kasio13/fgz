@@ -49,8 +49,9 @@
     .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
     .footer-links a:hover{color:var(--neon-cyan)}
     .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
-    @media(max-width:768px){.nav-links{display:none}.arcade-showcase{grid-template-columns:1fr}}
+    @media(max-width:768px){.nav-links{display:none}.arcade-showcase{grid-template-columns:1fr}.precios-grid{grid-template-columns:1fr}.marquee-text{font-size:.6rem}}
     .marquee-banner{position:fixed;top:60px;left:0;right:0;background:repeating-linear-gradient(45deg,#ffff00,#ffff00 20px,#000 20px,#000 40px);padding:.5rem 0;z-index:99;overflow:hidden;border-top:4px solid #000;border-bottom:4px solid #000;display:flex;align-items:center}
+    @media(max-width:768px){.marquee-banner{top:50px;padding:.3rem 0}}
     .marquee-track{display:flex;animation:marquee-scroll 15s linear infinite;white-space:nowrap}
     .marquee-text{font-family:'Press Start 2P',monospace;font-size:.8rem;color:#000;background:#ffff00;padding:5px 20px;font-weight:bold;text-transform:uppercase}
     @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
