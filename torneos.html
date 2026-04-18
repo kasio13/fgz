@@ -103,6 +103,10 @@
       text-shadow: 0 0 8px var(--neon-cyan);
     }
 
+    .nav-links a, .btn-torneo, .nav-logo {
+      cursor: pointer;
+    }
+
     section {
       position: relative;
       z-index: 1;
@@ -162,6 +166,7 @@
       background: radial-gradient(circle, rgba(255,255,0,0.1) 0%, transparent 70%);
       transition: all 0.5s;
       transform: scale(0);
+      pointer-events: none;
     }
 
     .torneo-card:hover::after { transform: scale(2); }
@@ -288,6 +293,11 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
     }
+    .marquee-banner{position:fixed;top:60px;left:0;right:0;background:repeating-linear-gradient(45deg,#ffff00,#ffff00 20px,#000 20px,#000 40px);padding:.5rem 0;z-index:99;overflow:hidden;border-top:4px solid #000;border-bottom:4px solid #000;display:flex;align-items:center}
+    .marquee-track{display:flex;animation:marquee-scroll 15s linear infinite;white-space:nowrap}
+    .marquee-text{font-family:'Press Start 2P',monospace;font-size:.8rem;color:#000;background:#ffff00;padding:5px 20px;font-weight:bold;text-transform:uppercase}
+    @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    section{padding-top:11rem !important}
   </style>
 </head>
 <body>
@@ -303,6 +313,12 @@
       <li><a href="reparaciones.html">Reparaciones</a></li>
     </ul>
   </nav>
+  <div class="marquee-banner">
+    <div class="marquee-track">
+      <span class="marquee-text">⚠️ EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️</span>
+      <span class="marquee-text">⚠️ EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️</span>
+    </div>
+  </div>
 
   <section id="torneos">
     <div style="max-width:1100px;margin:0 auto;">
@@ -314,28 +330,14 @@
           <span class="torneo-status status-open">🟢 ABIERTO</span>
           <h3>Street Fighter 6 Championship</h3>
           <div class="torneo-meta">📅 15 de Mayo · 🕐 4:00 PM · 👥 Max 32 jugadores</div>
-          <div class="torneo-prize">🏆 PRIZE POOL: $500 USD</div>
+          <div class="torneo-prize">🏆 PRIZE POOL: $500 mx</div>
           <a href="inscripcion.html?torneo=sf6" class="btn-torneo">INSCRIBIRSE</a>
-        </div>
-        <div class="torneo-card">
-          <span class="torneo-status status-closed">⚫ FINALIZADO</span>
-          <h3>Pokémon TCG — Copa Inverno</h3>
-          <div class="torneo-meta">📅 Abril · Finalizado</div>
-          <div class="torneo-prize">🏆 1er Lugar: TrainerAsh</div>
-          <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
         </div>
         <div class="torneo-card">
           <span class="torneo-status status-closed">⚫ FINALIZADO</span>
           <h3>Tekken 8 — Open Series</h3>
           <div class="torneo-meta">📅 Abril · Finalizado</div>
           <div class="torneo-prize">🏆 1er Lugar: FighterPro99</div>
-          <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
-        </div>
-        <div class="torneo-card">
-          <span class="torneo-status status-closed">⚫ FINALIZADO</span>
-          <h3>Magic: The Gathering Draft</h3>
-          <div class="torneo-meta">📅 Abril · Finalizado</div>
-          <div class="torneo-prize">🏆 1er Lugar: CardMaster</div>
           <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
         </div>
         <div class="torneo-card">
@@ -357,13 +359,6 @@
           <h3>Street Fighter 6 — Clasificación</h3>
           <div class="torneo-meta">📅 Abril · Finalizado</div>
           <div class="torneo-prize">🏆 1er Lugar: KenMaster</div>
-          <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
-        </div>
-        <div class="torneo-card">
-          <span class="torneo-status status-closed">⚫ FINALIZADO</span>
-          <h3>Pokémon TCG — Copa Inverno</h3>
-          <div class="torneo-meta">📅 Abril · Finalizado</div>
-          <div class="torneo-prize">🏆 1er Lugar: TrainerAsh</div>
           <button class="btn-torneo" disabled style="opacity:0.4;cursor:not-allowed;">FINALIZADO</button>
         </div>
       </div>

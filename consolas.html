@@ -36,6 +36,11 @@
     .footer-links a:hover{color:var(--neon-cyan)}
     .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
     @media(max-width:768px){.nav-links{display:none}}
+    .marquee-banner{position:fixed;top:60px;left:0;right:0;background:repeating-linear-gradient(45deg,#ffff00,#ffff00 20px,#000 20px,#000 40px);padding:.5rem 0;z-index:99;overflow:hidden;border-top:4px solid #000;border-bottom:4px solid #000;display:flex;align-items:center}
+    .marquee-track{display:flex;animation:marquee-scroll 15s linear infinite;white-space:nowrap}
+    .marquee-text{font-family:'Press Start 2P',monospace;font-size:.8rem;color:#000;background:#ffff00;padding:5px 20px;font-weight:bold;text-transform:uppercase}
+    @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    section{padding-top:11rem !important}
   </style>
 </head>
 <body>
@@ -50,53 +55,73 @@
       <li><a href="reparaciones.html">Reparaciones</a></li>
     </ul>
   </nav>
+  <div class="marquee-banner">
+    <div class="marquee-track">
+      <span class="marquee-text">⚠️ EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️</span>
+      <span class="marquee-text">⚠️ EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️ — EN DESARROLLO: ESPERANOS PRÓXIMAMENTE ⚠️</span>
+    </div>
+  </div>
 
   <section>
     <div style="max-width: 1100px; margin: 0 auto;">
       <p class="section-label">// Tienda</p>
-      <h1 class="section-title">🎮 CONSOLAS & HARDWARE</h1>
+      <h1 class="section-title">🎮 Redemption Zone</h1>
       <div class="section-line"></div>
 
       <p style="max-width: 800px; font-size: 1rem; line-height: 1.8; color: rgba(224,224,255,0.7); margin-bottom: 2rem;">
-        Venta de consolas nuevas y usadas, accesorios, controllers mod y hardware gaming. Todas las consolas son probadas y cuentan con garantía oficial.
+        Zona de Premios y Snacks
+        Juega, acumula tickets y cámbialos por increíbles premios.
+        Disfruta también de una variedad de bebidas, palomitas y dulces mientras vives la experiencia.
       </p>
 
       <div class="consolas-grid">
         <div class="consola-card">
-          <div class="consola-icon">🎮</div>
-          <h4>PlayStation 5</h4>
-          <p>Slim / Pro / Standard</p>
-          <div class="consola-precio">DESDE $499</div>
-        </div>
-        <div class="consola-card">
           <div class="consola-icon">🟢</div>
           <h4>Xbox Series X/S</h4>
           <p>Todas las versiones</p>
-          <div class="consola-precio">DESDE $299</div>
+          <div class="consola-precio">38000 tikets</div>
         </div>
         <div class="consola-card">
           <div class="consola-icon">🔴🔵</div>
           <h4>Nintendo Switch</h4>
           <p>OLED / Standard / Lite</p>
-          <div class="consola-precio">DESDE $199</div>
+          <div class="consola-precio">25000 tikets</div>
         </div>
         <div class="consola-card">
-          <div class="consola-icon">🕹️</div>
-          <h4>Consolas Retro</h4>
-          <p>NES, SNES, N64, PS1, PS2</p>
-          <div class="consola-precio">CONSULTAR</div>
+          <div class="consola-icon">🍿</div>
+          <h4>Snacks</h4>
+          <p>Refrescos, palomitas, dulces</p>
+          <div class="consola-precio">5 TICKETS</div>
         </div>
         <div class="consola-card">
-          <div class="consola-icon">🎯</div>
-          <h4>Controles Custom</h4>
-          <p>Modificados, hall effect, botones</p>
-          <div class="consola-precio">DESDE $60</div>
+          <div class="consola-icon">🥤</div>
+          <h4>Bebidas</h4>
+          <p>Refrescos, aguas, jugos</p>
+          <div class="consola-precio">3 TICKETS</div>
         </div>
         <div class="consola-card">
-          <div class="consola-icon">🔌</div>
-          <h4>Accesorios</h4>
-          <p>Cables, cargadores, protectores</p>
-          <div class="consola-precio">DESDE $5</div>
+          <div class="consola-icon">🍕</div>
+          <h4>Comida</h4>
+          <p>Hotdogs, pizzas, tacos</p>
+          <div class="consola-precio">10 TICKETS</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🏆</div>
+          <h4>Premios</h4>
+          <p>Figuras, playeras, vasos</p>
+          <div class="consola-precio">20 TICKETS</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">🎁</div>
+          <h4>Sorpresas</h4>
+          <p>Cajas mystery</p>
+          <div class="consola-precio">15 TICKETS</div>
+        </div>
+        <div class="consola-card">
+          <div class="consola-icon">💎</div>
+          <h4>Cartas Premium</h4>
+          <p>Cartas exclusivas</p>
+          <div class="consola-precio">50 TICKETS</div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Final Game Zone — TCG Cartas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght=400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root { --neon-cyan: #00f5ff; --neon-pink: #ff0080; --neon-yellow: #ffff00; --neon-green: #39ff14; --neon-purple: #bf00ff; --dark-bg: #05050f; --dark-mid: #0a0a1a; --dark-card: #0d0d22; --grid-color: rgba(0,245,255,0.07); --text-main: #e0e0ff; }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -23,25 +23,67 @@
     .section-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:1rem}
     .section-line{width:80px;height:3px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));margin-bottom:3rem;box-shadow:0 0 10px var(--neon-cyan)}
     .tcg-container{max-width:1100px;margin:0 auto}
-    .tcg-cards-visual{display:grid;grid-template-columns:repeat(6,1fr);gap:.8rem;margin:2rem 0}
-    .mini-card{aspect-ratio:2.5/3.5;border-radius:4px;border:1px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;background:var(--dark-card);transition:transform .3s, box-shadow .3s}
-    .mini-card:hover{transform:translateY(-8px) scale(1.05)}
-    .mini-card.cyan{border-color:var(--neon-cyan);box-shadow:0 0 15px rgba(0,245,255,.3)}
-    .mini-card.pink{border-color:var(--neon-pink);box-shadow:0 0 15px rgba(255,0,128,.3)}
-    .mini-card.yellow{border-color:var(--neon-yellow);box-shadow:0 0 15px rgba(255,255,0,.3)}
-    .mini-card.green{border-color:var(--neon-green);box-shadow:0 0 15px rgba(57,255,20,.3)}
-    .mini-card.purple{border-color:var(--neon-purple);box-shadow:0 0 15px rgba(191,0,255,.3)}
+    .tcg-carousel{position:relative;width:100%;margin:2rem auto;border:2px solid var(--neon-purple);box-shadow:0 0 30px rgba(191,0,255,.2);background:var(--dark-card);overflow:hidden;padding:1rem 0}
+    .tcg-slide{display:none;animation:fade .5s ease-in-out}
+    .tcg-slide.active{display:flex;flex-direction:row;overflow-x:auto;gap:12px;padding:16px;justify-content:flex-start}
+    .tcg-slide .card-thumb{flex:0 0 200px;max-width:200px;background:var(--dark-mid);border:1px solid var(--neon-purple);padding:.8rem;text-align:center;cursor:pointer;transition:all .3s;opacity:.9}
+    .tcg-slide .card-thumb:hover{border-color:var(--neon-cyan);transform:translateY(-3px);opacity:1}
+    .tcg-slide .card-thumb img{max-width:100%;aspect-ratio:2.5/3.5;object-fit:contain}
+    .tcg-slide .card-name{font-size:.7rem;color:var(--text-main);margin-top:.2rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .tcg-slide::-webkit-scrollbar{height:8px}
+    .tcg-slide::-webkit-scrollbar-track{background:var(--dark-bg)}
+    .tcg-slide::-webkit-scrollbar-thumb{background:var(--neon-purple);border-radius:4px}
+    @keyframes fade{from{opacity:.7}to{opacity:1}}
+    @keyframes cardFlipIn{
+      0%{opacity:0;transform:rotateY(-90deg) scale(.8);filter:blur(8px) brightness(2)}
+      60%{opacity:.8;transform:rotateY(8deg) scale(1.04);filter:blur(1px) brightness(1.3)}
+      100%{opacity:1;transform:rotateY(0deg) scale(1);filter:blur(0) brightness(1)}
+    }
+    @keyframes neonPulse{
+      0%,100%{box-shadow:0 0 10px var(--neon-purple),0 0 20px rgba(191,0,255,.3)}
+      50%{box-shadow:0 0 25px var(--neon-cyan),0 0 50px rgba(0,245,255,.4)}
+    }
+    .card-thumb.flip-in{animation:cardFlipIn .55s cubic-bezier(.23,1,.32,1) both}
+    .tcg-carousel.transitioning{animation:neonPulse .6s ease-in-out}
+    .carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:1rem}
+    .carousel-dot{width:10px;height:10px;border-radius:50%;background:rgba(224,224,255,.3);cursor:pointer;transition:background .3s}
+    .carousel-dot.active{background:var(--neon-purple)}
     .tcg-features{list-style:none;margin:2rem 0}
     .tcg-features li{display:flex;align-items:center;gap:.8rem;margin:.8rem 0;font-size:.9rem}
     .tcg-features li::before{content:'▶';color:var(--neon-purple);font-size:.6rem}
-    footer{position:relative;z-index:1;background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
+    .btn-tcg{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;padding:.8rem 1.5rem;background:transparent;border:2px solid var(--neon-cyan);color:var(--neon-cyan);cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:all .3s;margin:.5rem}
+    .btn-tcg:hover{background:var(--neon-cyan);color:#000;box-shadow:0 0 25px var(--neon-cyan)}
+    .btn-soon{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;padding:.8rem 1.5rem;background:transparent;border:2px solid var(--neon-pink);color:var(--neon-pink);cursor:default;text-transform:uppercase;letter-spacing:2px;margin:.5rem;position:relative}
+    .btn-soon::after{content:'🔒';position:absolute;top:-8px;right:-8px;font-size:.8rem}
+    .tcg-buttons{display:flex;flex-wrap:wrap;justify-content:center;margin:2rem 0}
+    #consulta-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;align-items:center;justify-content:center}
+    #ygo-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;align-items:center;justify-content:center}
+    #ygo-modal.show{display:flex}
+    #consulta-modal.show{display:flex}
+    .modal-content{background:var(--dark-card);border:1px solid var(--neon-purple);padding:2rem;max-width:500px;width:90%;max-height:90vh;overflow-y:auto}
+    .modal-content input,.modal-content textarea,.modal-content select{background:rgba(191,0,255,.1);border:1px solid var(--neon-purple);color:var(--text-main);font-family:'Share Tech Mono',monospace;font-size:.9rem;padding:.8rem;width:100%;margin-bottom:1rem;outline:none}
+    .modal-content input:focus,.modal-content textarea:focus,.modal-content select:focus{border-color:var(--neon-purple);box-shadow:0 0 15px rgba(191,0,255,.3)}
+    .modal-close{position:absolute;top:1rem;right:1rem;font-size:1.5rem;color:var(--text-main);cursor:pointer}
+    .search-box{display:flex;gap:.5rem;margin:1rem 0;flex-wrap:wrap}
+    .search-box input{flex:1;min-width:200px;background:rgba(191,0,255,.1);border:1px solid var(--neon-purple);color:var(--text-main);font-family:'Share Tech Mono',monospace;font-size:.9rem;padding:.8rem;outline:none}
+    .search-box input:focus{border-color:var(--neon-purple);box-shadow:0 0 15px rgba(191,0,255,.3)}
+    .search-box select{background:rgba(191,0,255,.1);border:1px solid var(--neon-purple);color:var(--text-main);font-family:'Share Tech Mono',monospace;font-size:.9rem;padding:.8rem;outline:none}
+    .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1rem 0;max-height:400px;overflow-y:auto}
+    .card-result{background:var(--dark-mid);border:1px solid var(--neon-purple);padding:1rem;text-align:center;cursor:pointer;transition:all .3s}
+    .card-result:hover{border-color:var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.3)}
+    .card-result img{max-width:100%;aspect-ratio:2.5/3.5;object-fit:contain;margin-bottom:.5rem}
+    .card-result h4{font-size:.7rem;color:var(--text-main);margin-bottom:.3rem}
+    .card-result .price{font-family:'Press Start 2P';font-size:.6rem;color:var(--neon-yellow)}
+    .card-result .set{font-size:.6rem;color:rgba(224,224,255,.5);margin-top:.3rem}
+    .btn-back{font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;padding:.6rem 1.2rem;background:transparent;border:2px solid var(--neon-pink);color:var(--neon-pink);cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:all .3s;display:flex;align-items:center;gap:.5rem;margin-bottom:1.2rem}
+    .btn-back:hover{background:var(--neon-pink);color:#000;box-shadow:0 0 20px var(--neon-pink)}background:var(--dark-bg);border-top:1px solid rgba(0,245,255,.2);padding:2rem;text-align:center}
     .footer-logo{font-family:'Press Start 2P',monospace;font-size:1rem;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);margin-bottom:1rem}
     .footer-logo span{color:var(--neon-pink)}
     .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
     .footer-links a{font-size:.75rem;color:rgba(224,224,255,.5);text-decoration:none;transition:color .2s}
     .footer-links a:hover{color:var(--neon-cyan)}
     .footer-copy{font-size:.7rem;color:rgba(224,224,255,.3)}
-    @media(max-width:768px){.nav-links{display:none}.tcg-cards-visual{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:768px){.nav-links{display:none}}
   </style>
 </head>
 <body>
@@ -67,13 +109,13 @@
         Somos el hub TCG más completo de la región. Compra, vende e intercambia cartas de todos los juegos principales con precios justos y carta garantizada auténtica.
       </p>
 
-      <div class="tcg-cards-visual">
-        <div class="mini-card cyan">⚡</div>
-        <div class="mini-card pink">🔥</div>
-        <div class="mini-card yellow">⭐</div>
-        <div class="mini-card green">🌿</div>
-        <div class="mini-card purple">🌀</div>
-        <div class="mini-card cyan">💧</div>
+      <div class="tcg-carousel" id="tcgCarousel"></div>
+      <div class="carousel-dots" id="carouselDots"></div>
+
+      <div class="tcg-buttons">
+        <button class="btn-tcg" onclick="openConsulta()">📩 Consultar Carta</button>
+        <button class="btn-tcg" onclick="openYgoSearch()">🔍 Buscar Yu-Gi-Oh!</button>
+        <button class="btn-soon">🛒 Tienda Online — Próximamente</button>
       </div>
 
       <ul class="tcg-features">
@@ -90,6 +132,49 @@
     </div>
   </section>
 
+  <div id="consulta-modal">
+    <span class="modal-close" onclick="closeConsulta()">✕</span>
+    <div class="modal-content">
+      <button class="btn-back" onclick="closeConsulta()">◀ REGRESAR</button>
+      <h3 style="font-family:'Orbitron',sans-serif;color:var(--neon-purple);margin-bottom:1rem;">📩 CONSULTA TU CARTA</h3>
+      <form action="https://formspree.io/f/mzzjzpyo" method="POST" onsubmit="handleConsulta(event)">
+        <input type="text" name="nombre" placeholder="Tu nombre" required />
+        <input type="email" name="correo" placeholder="Tu correo electrónico" required />
+        <input type="text" name="carta" placeholder="Nombre de la carta que buscas" required />
+        <input type="text" name="juego" placeholder="Juego (Pokemon, MTG, Yu-Gi-Oh!, etc.)" required />
+        <select name="tipo">
+          <option value="">— Tipo deConsulta —</option>
+          <option>Comprar</option>
+          <option>Vender</option>
+          <option>Intercambiar</option>
+          <option>Consultar precio</option>
+        </select>
+        <textarea name="mensaje" placeholder="Detalles adicionales (condición, edición, etc.)" rows="4"></textarea>
+        <button type="submit" class="btn-tcg" style="width:100%">📤 ENVIAR CONSULTA</button>
+      </form>
+      <div id="consulta-exito" style="display:none;text-align:center;padding:2rem;">
+        <div style="font-size:3rem;">✅</div>
+        <p style="color:var(--neon-green);margin-top:1rem;">¡Consulta enviada! Te contactaremos pronto.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="ygo-modal">
+    <span class="modal-close" onclick="closeYgoSearch()">✕</span>
+    <div class="modal-content" style="max-width:700px;">
+      <button class="btn-back" onclick="closeYgoSearch()">◀ REGRESAR</button>
+      <h3 style="font-family:'Orbitron',sans-serif;color:var(--neon-yellow);margin-bottom:1rem;">🔥 BUSCAR YU-GI-OH!</h3>
+      <div class="search-box">
+        <input type="text" id="ygo-search" placeholder="Nombre de la carta..." onkeyup="if(event.key==='Enter')searchYgo()" />
+        <select id="ygo-set-filter">
+          <option value="">Todos los sets</option>
+        </select>
+        <button class="btn-tcg" onclick="searchYgo()">🔍 Buscar</button>
+      </div>
+      <div id="ygo-results" class="results-grid"></div>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-logo">F.G.<span>Z</span></div>
     <div class="footer-links">
@@ -97,5 +182,145 @@
     </div>
     <p class="footer-copy">© 2026 Final Game Zone</p>
   </footer>
+
+  <script>
+    const tcgImages = [];
+    
+    function showSlide(i) {
+      const slides = document.querySelectorAll('.tcg-slide');
+      const dotItems = document.querySelectorAll('.carousel-dot');
+      slides.forEach(s => s.classList.remove('active'));
+      dotItems.forEach(d => d.classList.remove('active'));
+      if(slides[i]) slides[i].classList.add('active');
+      if(dotItems[i]) dotItems[i].classList.add('active');
+    }
+
+    function nextSlide() {
+      const slides = document.querySelectorAll('.tcg-slide');
+      const current = document.querySelector('.tcg-slide.active');
+      let idx = 0;
+      if (current) {
+        const arr = Array.from(slides);
+        idx = (arr.indexOf(current) + 1) % slides.length;
+      }
+      showSlide(idx);
+    }
+
+    function openConsulta() { document.getElementById('consulta-modal').classList.add('show'); }
+    function closeConsulta() { document.getElementById('consulta-modal').classList.remove('show'); }
+
+    function handleConsulta(e) {
+      e.preventDefault();
+      fetch(e.target.action, { method: 'POST', body: new FormData(e.target) })
+        .then(r => { if(r.ok) { e.target.style.display = 'none'; document.getElementById('consulta-exito').style.display = 'block'; }})
+        .catch(() => alert('Error al enviar'));
+    }
+
+async function loadPopularCards() {
+      const carousel = document.getElementById('tcgCarousel');
+      try {
+        const res = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php'); 
+        const data = await res.json();
+        allCards = data.data || [];
+        showGroup(0);
+        setInterval(showNextGroup, 3000);
+      } catch(e) {
+        carousel.innerHTML = '<p style="text-align:center;color:var(--neon-pink);">Error al conectar con la base de datos</p>';
+      }
+    }
+    function showGroup(offset) {
+      const carousel = document.getElementById('tcgCarousel');
+      carousel.classList.add('transitioning');
+      setTimeout(() => carousel.classList.remove('transitioning'), 600);
+      carousel.innerHTML = '';
+      const row = document.createElement('div');
+      row.className = 'tcg-slide active';
+      row.dataset.offset = offset;
+      const group = allCards.slice(offset, offset + 5);
+      group.forEach((c, i) => {
+        const img = c.card_images?.[0]?.image_url;
+        if (!img) return;
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card-thumb flip-in';
+        cardDiv.style.animationDelay = (i * 0.08) + 's';
+        cardDiv.onclick = () => consultaCarta(c.name);
+        cardDiv.innerHTML = `<img src="${img}" alt="${c.name}" /><p class="card-name">${c.name}</p>`;
+        row.appendChild(cardDiv);
+      });
+      carousel.appendChild(row);
+    }
+    function showNextGroup() {
+      const row = document.querySelector('.tcg-slide.active');
+      const offset = parseInt(row?.dataset.offset || 0);
+      const total = allCards.length;
+      const next = (offset + 5) >= total ? 0 : offset + 5;
+      showGroup(next);
+    }
+    let allCards = [];
+    window.onload = loadPopularCards;
+    let ygoSets = [];
+    
+    function openYgoSearch() { document.getElementById('ygo-modal').classList.add('show'); loadYgoSets(); }
+    function closeYgoSearch() { document.getElementById('ygo-modal').classList.remove('show'); }
+
+    async function loadYgoSets() {
+      if (ygoSets.length > 0) return;
+      try {
+        const res = await fetch('https://db.ygoprodeck.com/api/v7/cardsets.php');
+        const data = await res.json();
+        const sets = data.map(s => s.set_name).sort();
+        ygoSets = sets;
+        const sel = document.getElementById('ygo-set-filter');
+        sets.forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; sel.appendChild(opt); });
+      } catch(e) { console.error(e); }
+    }
+
+    async function searchYgo() {
+      const name = document.getElementById('ygo-search').value.trim();
+      const setFilter = document.getElementById('ygo-set-filter').value;
+      const results = document.getElementById('ygo-results');
+      
+      results.innerHTML = '<p style="color:var(--neon-purple);">🔎 Buscando...</p>';
+      if (!name) { results.innerHTML = ''; return; }
+      
+      try {
+        const res = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=' + encodeURIComponent(name));
+        const data = await res.json();
+
+        if (data.error) {
+            results.innerHTML = '<p style="color:var(--neon-pink);">No se encontraron cartas</p>';
+            return;
+        }
+
+        let cards = data.data || [];
+        if (setFilter) cards = cards.filter(c => c.card_sets?.some(s => s.set_name === setFilter));
+        
+        if (cards.length === 0) { 
+            results.innerHTML = '<p style="color:var(--neon-pink);">No se encontraron cartas en este set</p>'; 
+            return; 
+        }
+
+        results.innerHTML = cards.slice(0, 20).map(c => {
+          const img = c.card_images?.[0]?.image_url || '';
+          const set = c.card_sets?.find(s => s.set_name === setFilter) || c.card_sets?.[0];
+          const price = set?.set_price || c.card_prices?.[0]?.tcgplayer_price || 'Consultar';
+          
+          return '<div class="card-result" onclick="consultaCarta(\'' + c.name.replace(/'/g, "\\'") + '\')"><img src="' + img + '" alt="' + c.name + '" /><h4>' + c.name + '</h4><p class="price">$' + price + ' USD</p><p class="set">' + (set?.set_name || '') + '</p></div>';
+        }).join('');
+      } catch(e) { 
+          results.innerHTML = '<p style="color:var(--neon-pink);">Error al buscar</p>'; 
+      }
+    }
+
+    function consultaCarta(carta) {
+      closeYgoSearch();
+      openConsulta();
+      setTimeout(() => { 
+          document.querySelector('#consulta-modal input[name="carta"]').value = carta; 
+          document.querySelector('#consulta-modal select[name="tipo"]').value = 'Consultar precio'; 
+          document.querySelector('#consulta-modal input[name="juego"]').value = 'Yu-Gi-Oh!';
+      }, 100);
+    }
+  </script>
 </body>
 </html>
