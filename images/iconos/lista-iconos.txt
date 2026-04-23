@@ -1,0 +1,64 @@
+LISTA DE ICONOS PNG - Final Game Zone
+====================================
+
+ICONOS YA INTEGRADOS EN EL CÓDIGO
+==================================
+✓ arcade.png        -> 🕹️ (index.html - Arcade & Retro)
+✓ tecnico.png       -> 🔧 (index.html - Reparaciones)  
+✓ torneos.png       -> 🏆 (index.html - Torneos)
+✓ pc.png            -> 💻 (index.html - Desarrollo)
+✓ snacks.png        -> 🍿🥤 (index.html - Redemption Zone)
+✓ tcg.png           -> 🃏 (index.html - TCG & Cartas)
+✓ descarga.png      -> 📥 (index.html - Descargas)
+✓ consola.png       -> 🎮 (reparaciones.html - Consolas)
+✓ control.png       -> 🎮 (reparaciones.html - Controles)
+
+---
+
+ICONOS PENDIENTES POR CREAR
+===========================
+
+ICONOS DE CONSOLAS (tienda)
+-----------------------
+ps5.png           -> 🟢 (PlayStation)
+switch.png        -> 🔴🔵 (Nintendo)
+bebidas.png       -> 🥤 (Bebidas)
+comida.png        -> 🍕 (Comida)
+premios.png       -> 🏆 (Premios)
+sorpresas.png     -> 🎁 (Sorpresas)
+cartas.png        -> 💎 (Cartas Premium)
+
+ICONOS DE REPARACIONES
+---------------------
+carga.png         -> 🔌 (Puerto carga)
+
+ICONOS DE EMULADORES
+------------------
+emulador1.png     -> 🎯
+emulador2.png     -> 🔴
+emulador3.png     -> 🟢
+emulador4.png     -> 🔵
+
+ICONOS DE TORNEOS
+----------------
+abierto.png       -> 🟢 (Abierto)
+calendario.png    -> 📅 (Fecha)
+reloj.png         -> 🕐 (Hora)
+jugadores.png     -> 👥 (Jugadores)
+
+ICONOS GENERALES
+---------------
+tienda.png        -> 🛒
+warning.png       -> ⚠️
+check.png         -> ✅
+codigo.png        -> 💻
+redes.png         -> 📱
+
+---
+
+INSTRUCCIONES
+=============
+1. Crear imagenes PNG con fondo transparente
+2. Tamaño recomendado: 128x128 o 256x256 px
+3. Guardar en: images/iconos/
+4. El código ya está listo para usarlas

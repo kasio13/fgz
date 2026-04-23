@@ -26,7 +26,8 @@
     .repair-list{display:flex;flex-direction:column;gap:1rem;margin:2rem 0}
     .repair-item{display:grid;grid-template-columns:auto 1fr auto;gap:6px;align-items:center;padding:1rem 1.5rem;border:1px solid rgba(255,0,128,.2);background:var(--dark-card);transition:all .3s}
     .repair-item:hover{border-color:var(--neon-pink);box-shadow:0 0 20px rgba(255,0,128,.2)}
-    .repair-icon{font-size:1.5rem}
+    .repair-icon{font-size:1.5rem;width:50px;height:50px;object-fit:contain}
+    .repair-icon img{width:100%;height:100%;object-fit:contain}
     .repair-item h4{font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:var(--text-main);margin-bottom:.2rem}
     .repair-item p{font-size:.9rem;color:rgba(224,224,255,.7)}
     .repair-price{font-family:'Press Start 2P',monospace;font-size:1.1rem;color:var(--neon-pink);white-space:nowrap}
@@ -74,12 +75,12 @@
         <div class="stat-box"><span class="stat-num">3m</span><span class="stat-label">Garantía</span></div>
       </div>
 
-      <div class="repair-list">
-        <div class="repair-item"><span class="repair-icon">🎮</span><div><h4>Consolas - Diagnóstico</h4><p>Revisión completa de tu dispositivo</p></div><span class="repair-price">$50</span></div>
-        <div class="repair-item"><span class="repair-icon">🔌</span><div><h4>Modificación de controladores</h4><p>Reparacion controles (Xbox, PlayStation, Nintendo, Generico), puertos de carga, Cambio de “sticks” (joysticks efecto hall) botones, gatillos, carcasas</p></div><span class="repair-price">DESDE $150</span></div>
+<div class="repair-list">
+        <div class="repair-item"><span class="repair-icon"><img src="images/iconos/consolas.png" alt=""></span><div><h4>Consolas - Diagnóstico</h4><p>Revisión completa de tu dispositivo</p></div><span class="repair-price">$50</span></div>
+        <div class="repair-item"><span class="repair-icon"><img src="images/iconos/control.png" alt=""></span><div><h4>Modificación de controladores</h4><p>Reparacion controles (Xbox, PlayStation, Nintendo, Generico), puertos de carga, Cambio de "sticks" (joysticks efecto hall) botones, gatillos, carcasas</p></div><span class="repair-price">DESDE $150</span></div>
         <div class="repair-item"><span class="repair-icon">💨</span><div><h4>Mantenimiento y limpieza</h4><p>Limpieza interior,Eliminación de virus, Optimizacion de pc, pasta térmica</p></div><span class="repair-price">$250</span></div>
-        <div class="repair-item"><span class="repair-icon">🖥️</span><div><h4>Reparacion de PC Formateo e Instalacion de SO</h4><p>Reparación y actualizacion de Hardware, Activacion e instalacion de programas, </p></div><span class="repair-price"></span></div>
-        <div class="repair-item"><span class="repair-icon">🎮</span><div><h4>Modificación de consolas</h4><p>Chips, modos, region free</p></div><span class="repair-price">DESDE $100</span></div>
+        <div class="repair-item"><span class="repair-icon"><img src="images/iconos/pc.png" alt=""></span><div><h4>Reparacion de PC Formateo e Instalacion de SO</h4><p>Reparación y actualizacion de Hardware, Activacion e instalacion de programas, </p></div><span class="repair-price"></span></div>
+        <div class="repair-item"><span class="repair-icon"><img src="images/iconos/consolas.png" alt=""></span><div><h4>Modificación de consolas</h4><p>Chips, modos, region free</p></div><span class="repair-price">DESDE $100</span></div>
         <div class="repair-item"><span class="repair-icon">💾</span><div><h4>Recuperación de datos</h4><p>Saves, memorias y tarjetas SD</p></div><span class="repair-price">DESDE $150</span></div>
       </div>
     </div>
